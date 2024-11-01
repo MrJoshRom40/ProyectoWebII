@@ -1,0 +1,80 @@
+<body>
+  <div class="form-container">
+    <h2>Registro de Usuario</h2>
+    <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+        <div class="form-group">
+            <label for="username">Nombre de Usuario:</label>
+            <input
+                type="text"
+                id="username"
+                [(ngModel)]="username"
+                name="username"
+                required
+                placeholder="Ingresa tu nombre de usuario"
+            />
+        </div>
+  
+        <div class="form-group">
+            <label for="password">Contraseña:</label>
+            <input
+                type="password"
+                id="password"
+                [(ngModel)]="password"
+                name="password"
+                required
+                placeholder="Ingresa tu contraseña"
+            />
+        </div>
+  
+        <div class="form-group">
+            <label for="correo">Correo:</label>
+            <input
+                type="email"
+                id="correo"
+                [(ngModel)]="correo"
+                name="correo"
+                required
+                placeholder="tuemail@ejemplo.com"
+            />
+        </div>
+  
+        <div class="form-group">
+            <label for="pregunta">Pregunta de Seguridad:</label>
+            <input
+                type="text"
+                id="pregunta"
+                [(ngModel)]="pregunta"
+                name="pregunta"
+                required
+                placeholder="Pregunta de seguridad"
+            />
+        </div>
+  
+        <div class="form-group">
+            <label for="respuesta">Respuesta:</label>
+            <input
+                type="text"
+                id="respuesta"
+                [(ngModel)]="respuesta"
+                name="respuesta"
+                required
+                placeholder="Respuesta a la pregunta"
+            />
+        </div>
+  
+        <div class="form-group">
+            <label for="direccion">Dirección:</label>
+            <input
+                type="text"
+                id="direccion"
+                [(ngModel)]="direccion"
+                name="direccion"
+                required
+                placeholder="Ingresa tu dirección"
+            />
+        </div>
+  
+        <button type="submit" [disabled]="!registerForm.form.valid">Registrar</button>
+    </form>
+  </div>
+</body>

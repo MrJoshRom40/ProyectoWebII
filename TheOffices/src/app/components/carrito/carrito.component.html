@@ -1,0 +1,37 @@
+<div *ngIf="productos.length === 0" class="empty">
+  <p>Tu carrito está vacío</p>
+  <img class="em" src="assets/carrito.png" alt="carro vacío">
+</div>
+
+<!-- Contenedor que agrupa los productos y el botón de pagar -->
+<div class="carrito-container" *ngIf="productos.length > 0">
+  
+  <!-- Contenedor de productos -->
+    <div class="productos-container">
+      <div *ngFor="let producto of productos" class="productos">
+        <div class="prod">
+          <h3>{{ producto.Nombre }}</h3>
+        <p>{{ producto.Descripcion }}</p>
+        <p>Precio: {{ producto.Precio }}</p>
+        <p>Cantidad: {{producto.Cantidad}}</p>
+        <div class="acciones">
+          <button (click)="removeFromCart(producto.ID_Producto)">Eliminar</button>
+          <button class="agregar" (click)="aumentarCantidad(producto.ID_Producto)">+</button>
+          <button class="quitar" (click)="disminuirCantidad(producto.ID_Producto)">-</button>
+        </div>
+        </div>
+        <img class="image" src="assets/product.webp" alt="smn">
+      </div>
+    </div>
+  
+
+  <!-- Contenedor de pago -->
+  <div class="pagar">
+    <p>Valor del pedido: </p>
+    <p>{{total | currency}}</p>
+    <app-paypal-button [productos]="productos" [total]="total"></app-paypal-button>
+  </div>
+
+</div>
+
+

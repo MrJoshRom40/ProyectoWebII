@@ -1,0 +1,42 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px; /* Padding para el header */
+    width: 97.4%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra */
+    border: 2px solid #ccc; /* Bordes del header */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #f8f8f8; /* Color de fondo del header */
+}
+
+.logo img {
+    max-height: 70px; /* Ajusta según sea necesario */
+}
+
+nav {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center; /* Centra los enlaces en el nav */
+}
+
+nav a {
+    font-size: large;
+    margin: 0 15px; /* Espaciado entre enlaces */
+    text-decoration: none; /* Sin subrayado */
+    color: #333; /* Color del texto */
+    padding: 10px 20px; /* Ajuste del espaciado interno */
+    background-color: #eaeaea; /* Color de fondo del cuadrado */
+    border: 1px solid #ccc; /* Bordes del cuadrado */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.5s; /* Transición para el hover */
+    
+}
+
+nav a:hover {
+    background-color: #75ccff; /* Color de fondo al pasar el ratón */
+}
+
+.profile img {
+    max-height: 50px; /* Ajusta según sea necesario */
+}

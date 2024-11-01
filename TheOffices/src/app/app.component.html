@@ -1,0 +1,19 @@
+<header *ngIf="!isLoginRoute()">
+    <div class="logo">
+        <img routerLink="/Login" src="assets/Logo.png" alt="Logo TheOffices">
+    </div>
+    <nav>
+        <a routerLink="/Catálogo">Productos</a>
+        <a routerLink="/Carrito">Carrito</a>
+        <a routerLink="#">Pedidos</a>
+        <a routerLink="#">Contacto</a>
+    </nav>
+    <div class="profile">
+        <img src="assets/usr.webp" alt="Perfil">
+    </div>
+</header>
+
+<router-outlet></router-outlet>
+
+
+

@@ -1,0 +1,84 @@
+body {
+    margin: 0;
+}
+
+
+
+
+.product-grid {
+    font-size: large;
+    display: grid; /* Utiliza grid para organizar los productos */
+    grid-template-columns: repeat(3, 1fr); /* Tres columnas de igual tamaño */
+    justify-items: center; /* Centra los elementos dentro de cada celda */
+    gap: 20px; /* Espaciado entre los elementos (ajustado a 2px) */
+    padding: 20px; /* Espaciado interno de la sección */
+    background-color: #f9f9f9; /* Color de fondo para la sección */
+}
+
+.product {
+    background-color: #fff; /* Color de fondo del producto */
+    border: 1px solid #ccc; /* Borde del producto */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno del producto */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: transform 0.5s; /* Transición suave para el hover */
+    width: 100%; /* Asegura que el producto ocupe todo el ancho de su celda */
+    max-width: 80%; /* Ajusta el ancho máximo para acercar columnas */
+    justify-items: center;
+}
+
+.product:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05); /* Aumenta el tamaño al pasar el ratón */
+}
+
+button:hover{
+    transform: scale(1.05); /* Aumenta el tamaño al pasar el ratón */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    background-color: #FAFDDE;
+    transition: transform 0.5s;
+}
+
+.product h3 {
+    margin: 0 0 5px; /* Margen inferior del título */
+    font-size: 1.2em; /* Tamaño del texto del título */
+    color: #333; /* Color del texto del título */
+}
+
+.product p {
+    margin: 2px 0; /* Margen entre los párrafos */
+    color: #666; /* Color del texto */
+}
+
+.product-details {
+    display: flex; /* Utiliza flexbox para alinear los elementos */
+    justify-content: space-between; /* Espaciado entre los elementos */
+    align-items: center; /* Centra verticalmente los elementos */
+}
+
+.descripcion {
+    margin: 0; /* Elimina el margen para evitar espacios adicionales */
+    flex-grow: 1; /* Permite que la descripción ocupe el espacio restante */
+}
+
+.precio {
+    margin: 0; /* Elimina el margen para evitar espacios adicionales */
+    padding-left: 10px; /* Espaciado a la izquierda para separación visual */
+}
+
+.product:hover .precio {
+    font-weight: bold; /* Cambia a negritas al pasar el ratón sobre el producto */
+}
+
+.foto{
+    max-height: 150px;
+}
+
+button{
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border: 1px solid #ccc; /* Borde del producto */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno del producto */
+}
+

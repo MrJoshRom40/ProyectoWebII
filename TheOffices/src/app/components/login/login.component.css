@@ -1,0 +1,84 @@
+.logo {
+    display: block; /* Asegura que la imagen se trate como un bloque */
+    margin: 0 auto 20px; /* Centra la imagen y añade un margen inferior */
+    max-width: 150px; /* Asegura que la imagen no exceda el ancho del contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+    margin-top: 50px;
+  }
+
+/* Estilo general para el contenedor */
+div {
+    max-width: 400px; /* Limitar el ancho del formulario */
+    margin: 50px auto; /* Centrar el formulario verticalmente */
+    padding: 20px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde alrededor del formulario */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
+    background-color: #f9f9f9; /* Color de fondo */
+  }
+  
+  /* Estilo para el encabezado */
+  h2 {
+    text-align: center; /* Centrar el texto del encabezado */
+    color: #333; /* Color del texto */
+  }
+  
+  /* Estilo para los elementos del formulario */
+  form div {
+    margin-bottom: 15px; /* Espacio entre los elementos del formulario */
+  }
+  
+  /* Estilo para las etiquetas */
+  label {
+    display: block; /* Mostrar etiquetas en una nueva línea */
+    margin-bottom: 5px; /* Espacio entre la etiqueta y el campo de entrada */
+    color: #555; /* Color del texto de las etiquetas */
+  }
+  
+  /* Estilo para los campos de entrada */
+  input[type="text"],
+  input[type="password"] {
+    width: 95%; /* Ancho completo */
+    max-width: 95%;
+    padding: 5px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde alrededor de los campos */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra interna */
+  }
+  
+  /* Estilo para el botón */
+  button {
+    width: 100%; /* Ancho completo */
+    padding: 10px; /* Espaciado interno */
+    background-color: #fff; /* Color de fondo del botón */
+    color: #000; /* Color del texto del botón */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    cursor: pointer; /* Cambiar el cursor al pasar el mouse */
+    transition: background-color 0.3s; /* Transición suave para el cambio de color */
+  }
+  
+  /* Efecto al pasar el mouse sobre el botón */
+  button:hover {
+    background-color: #75ccff; /* Color de fondo del botón al pasar el mouse */
+  }
+  
+  .create-account {
+    display: inline-block; /* Hace que el botón se comporte como un bloque en línea */
+    margin-top: 15px; /* Espacio superior respecto al formulario */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de la fuente */
+    color: #000; /* Color del texto */
+    background-color: #fff; /* Color de fondo */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: background-color 0.3s; /* Efecto de transición para el color de fondo */
+  }
+  
+  /* Efecto hover para el botón de crear cuenta */
+  .create-account:hover {
+    background-color: #ff927c; /* Color de fondo al pasar el mouse */
+  }
