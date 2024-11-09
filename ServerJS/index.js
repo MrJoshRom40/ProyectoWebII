@@ -14,7 +14,7 @@ app.use(express.json());
 const db = mysql.createConnection({
   host: 'localhost', // El servidor de tu base de datos
   user: 'root',      // Usuario de MySQL (por defecto en XAMPP es 'root')
-  password: '3li4lexR0m040',      // Contraseña de MySQL (por defecto en XAMPP está vacía)
+  password: '',      // Contraseña de MySQL (por defecto en XAMPP está vacía)
   database: 'theoffices', // Nombre de tu base de datos
 });
 
