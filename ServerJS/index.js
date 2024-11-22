@@ -210,11 +210,6 @@ function sendEmail(to, subject, text) {
   });
 }
 
-
-
-
-
-
 // Iniciar el servidor
 app.listen(port, () => {
   console.log(`Servidor ejecutándose en http://localhost:${port}`);
