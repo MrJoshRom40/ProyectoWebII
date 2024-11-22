@@ -1,0 +1,64 @@
+.contacto-container {
+    display: flex;
+    color: var(--negro, #000);
+    padding: 20px;
+  }
+  
+  .imagen-empresa {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .imagen {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+  }
+  
+  .contenido {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .contenido h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .contenido p {
+    margin-bottom: 20px;
+  }
+  
+  .informacion {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  
+  .botones {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .boton-preguntas,
+  .boton-privacidad {
+    background-color: var(--azul, #333);
+    color: var(--blanco, #fff);
+    width: 50%;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .boton-preguntas:hover,
+  .boton-privacidad:hover {
+    background-color: var(--azul_fuerte, #555);
+  }
+  

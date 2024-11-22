@@ -1,0 +1,41 @@
+.contenedor-avisos {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .columna-aviso, .columna-terminos {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid var(--azul, #333);
+    border-radius: 5px;
+  }
+  
+  .columna-aviso h2, .columna-terminos h2 {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .columna-aviso h3, .columna-terminos h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .columna-aviso p, .columna-terminos p {
+    text-align: justify;
+    line-height: 1.6;
+  }
+  
+  .columna-aviso ul, .columna-terminos ul {
+    margin-left: 20px;
+    list-style-type: disc;
+  }
+  
+  .columna-terminos ul {
+    margin-top: 10px;
+  }
+  
