@@ -5,21 +5,33 @@ import { CommonModule } from '@angular/common';
 import { CarritoService } from '../../services/Carrito/carrito.service';
 import { Producto } from '../../interfaces/product.interface';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-catalog',
   templateUrl: './product-catalog.component.html',
   styleUrls: ['./product-catalog.component.css'],
   standalone: true,
-  imports: [HttpClientModule, CommonModule], // Importa HttpClientModule aquí también
+  imports: [HttpClientModule, CommonModule],
 })
 export class ProductCatalogComponent implements OnInit {
-  productos: Producto[] = []; // Cambié 'any[]' a 'Producto[]' para mejor tipado
+  productos: Producto[] = [];
+  esAdmin: boolean = false; // Indica si el usuario es administrador
 
-  constructor(private catalogoService: CatalogoService, private carritoService: CarritoService) {}
+  constructor(
+    private router: Router,
+    private catalogoService: CatalogoService,
+    private carritoService: CarritoService
+  ) {}
 
   ngOnInit(): void {
-    this.cargarProductos(); // Llamar al método para cargar productos en la inicialización
+    this.verificarRolUsuario(); 
+    this.cargarProductos();
+  }
+
+  verificarRolUsuario(): void {
+    const usuarioActual = localStorage.getItem('rol'); 
+    this.esAdmin = usuarioActual === '1'; // 1 = admin, 0 = usuario
   }
 
   cargarProductos(): void {
@@ -29,25 +41,32 @@ export class ProductCatalogComponent implements OnInit {
       },
       (error) => {
         console.error('Error al cargar productos:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudieron cargar los productos. Por favor, inténtalo más tarde.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+        });
       }
     );
   }
 
-  // Método para agregar un producto al carrito
-  // product-catalog.component.ts
-addToCart(producto: Producto): void{
-  this.carritoService.addToCart(producto);
-  console.log(this.carritoService.getItems());
-  this.mostrarAlerta();
-}
+  modificarProducto(producto: Producto): void {
+    this.router.navigate(['Producto', producto.ID_Producto]);
+  }
 
+  addToCart(producto: Producto): void {
+    this.carritoService.addToCart(producto);
+    console.log(this.carritoService.getItems());
+    this.mostrarAlerta();
+  }
 
   mostrarAlerta(): void {
     Swal.fire({
       title: 'TheOffices',
       text: '¡El producto se agregó correctamente al carrito!',
-      icon: 'success', // Puedes usar 'warning', 'error', 'info', 'success', 'question'
-      confirmButtonText: 'Aceptar'
+      icon: 'success',
+      confirmButtonText: 'Aceptar',
     });
   }
 }

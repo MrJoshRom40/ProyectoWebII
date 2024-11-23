@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from '../../services/Login/login.service'; // Importa tu servicio de autenticación
+import { LoginService } from '../../services/Login/login.service';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -12,61 +12,65 @@ import { UserService } from '../../services/User/user.service';
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  styleUrls: ['./login.component.css'], // Arreglar typo: styleUrl -> styleUrls
   imports: [CommonModule, FormsModule, HttpClientModule]
 })
 export class LoginComponent {
   username: string = '';
   password: string = '';
-  user: User | null = null; // Para almacenar la respuesta del usuario
+  user: User | null = null;
 
+  constructor(
+    private loginService: LoginService,
+    private router: Router,
+    private userService: UserService
+  ) {}
 
-
-
-  constructor(private loginService: LoginService, private router: Router, private us: UserService) {}
-
-  // Método que se ejecuta cuando el usuario envía el formulario
-  onLogin() {
-    this.loginService.login(this.username, this.password).subscribe(
-      (response: User) => {
-        this.user = response;
-        console.log('Login exitoso', this.user);
-        this.us.setUser(this.user);
-        this.router.navigate(['/Catálogo'])
-
-        this.mnsg();
-      },
-      (error) => {
-        console.error('Error en el login', error);
-        this.diff();
-      }
-    );
+  onLogin(): void {
+  if (!this.username || !this.password) {
+    Swal.fire('Error', 'Por favor, ingrese usuario y contraseña.', 'error');
+    return;
   }
 
-  mnsg() {
+  this.loginService.login(this.username, this.password).subscribe(
+    (response: User) => {
+      this.user = response;
+      localStorage.setItem('rol', this.user.Tipo + ""); // Guardar como string para evitar errores
+      this.userService.setUser(this.user);
+      this.router.navigate(['/Catálogo']);
+      this.showSuccessMessage();
+    },
+    (error) => {
+      console.error('Error en el login', error);
+      this.showErrorMessage();
+    }
+  );
+}
+
+
+  private showSuccessMessage(): void {
     Swal.fire({
       title: 'TheOffices',
-      text: 'Bienvenido ' + this.user?.Usuario,
-      icon: 'success', // Puedes usar 'warning', 'error', 'info', 'success', 'question'
+      text: `Bienvenido, ${this.user?.Usuario}`,
+      icon: 'success',
       confirmButtonText: 'Aceptar'
     });
   }
 
-  diff() {
+  private showErrorMessage(): void {
     Swal.fire({
       title: 'TheOffices',
       text: 'Usuario o contraseña incorrectos',
-      icon: 'error', // Puedes usar 'warning', 'error', 'info', 'success', 'question'
+      icon: 'error',
       confirmButtonText: 'Aceptar'
     });
   }
 
-  register(){
-    this.router.navigate(['/addUsr'])
+  register(): void {
+    this.router.navigate(['/addUsr']);
   }
 
   recuperate(){
     this.router.navigate(['/Recuperar'])
   }
 }
-

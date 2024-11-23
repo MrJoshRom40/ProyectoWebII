@@ -49,46 +49,30 @@ app.get('/api/productos', (req, res) => {
   });
 });
 
-app.post('/api/pedidos', (req, res) => {
-  const { user } = req.body; // Obtener el ID del usuario desde el cuerpo de la solicitud
-  if (!user) {
-    return res.status(400).json({ error: 'Por favor, ingrese usr' });
-  }
-
-  const sql = 'SELECT ID_Pedido, Total, Fecha, Codigo, Clave FROM pedido WHERE ID_Usuario = ?';
-  db.query(sql, [user], (err, results) => {
-    if (err) {
-      return res.status(500).send('Error en la consulta a la base de datos');
-    }
-    res.json(results); // Enviar los resultados al cliente
-  });
-});
-
-app.post('/api/detalles', (req, res) => {
-  console.log('Datos recibidos:', req.body); // Verifica el contenido de la solicitud
-
-  const { pedidoId } = req.body;
-  if (!pedidoId) {
-    return res.status(400).json({ error: 'Por favor, ingrese pedido' });
-  }
-
+app.get('/api/productos/:id', (req, res) => {
+  const { id } = req.params; // Extraer el ID de los parámetros de la ruta
   const sql = `
-    SELECT Producto.Nombre, Producto.Descripcion, DetallesPedido.Subtotal, DetallesPedido.Cantidad 
-    FROM DetallesPedido 
-    INNER JOIN Producto ON DetallesPedido.Producto = Producto.ID_Producto 
-    INNER JOIN Pedido ON DetallesPedido.Pedido = Pedido.ID_Pedido 
-    WHERE DetallesPedido.Pedido = ?`;
-
-  db.query(sql, [pedidoId], (err, results) => {
+    SELECT producto.ID_Producto, producto.Nombre, producto.Descripcion, producto.Precio, inventario.Cantidad 
+    FROM producto
+    JOIN inventario ON producto.Inventario = inventario.ID_Inventario
+    WHERE producto.ID_Producto = ?;
+  `;
+  
+  db.query(sql, [id], (err, results) => {
     if (err) {
-      console.error('Error en la consulta:', err); // Depuración
-      return res.status(500).send('Error en la consulta a la base de datos');
+      console.error(err);
+      return res.status(500).json({ error: 'Error al obtener el producto' });
     }
-    console.log('Resultados:', results); // Verifica los resultados
-    res.json(results);
+    
+    if (results.length === 0) {
+      // Si no se encuentra el producto, enviar un error 404
+      return res.status(404).json({ error: 'Producto no encontrado' });
+    }
+
+    // Enviar el primer resultado (el producto encontrado)
+    res.json(results[0]);
   });
 });
-
 
 
 app.post('/api/login', (req, res) => {
