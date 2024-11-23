@@ -4,8 +4,8 @@ import Swal from 'sweetalert2';
 import { UserService } from '../../services/User/user.service';
 import { PedidoService } from '../../services/Pedido/pedido.service';
 import { Pedido } from '../../interfaces/pedido.interface';
-import { DetallesService } from '../../services/Detalles/detalles.service';
-import { response } from 'express';
+import { DetallesService } from '../../services/DetallesCarrito/detalles.service';
+
 
 
 

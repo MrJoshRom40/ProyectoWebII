@@ -69,4 +69,8 @@ export class LoginComponent {
   register(): void {
     this.router.navigate(['/addUsr']);
   }
+
+  recuperate(){
+    this.router.navigate(['/Recuperar'])
+  }
 }

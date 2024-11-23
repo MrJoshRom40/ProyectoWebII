@@ -82,3 +82,21 @@ div {
   .create-account:hover {
     background-color: #ff927c; /* Color de fondo al pasar el mouse */
   }
+
+  .recuperate {
+    display: inline-block; /* Hace que el botón se comporte como un bloque en línea */
+    margin-top: 15px; /* Espacio superior respecto al formulario */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de la fuente */
+    color: #000; /* Color del texto */
+    background-color: #fff; /* Color de fondo */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: background-color 0.3s; /* Efecto de transición para el color de fondo */
+  }
+  
+  /* Efecto hover para el botón de crear cuenta */
+  .recuperate:hover {
+    background-color: #f6fdb6; /* Color de fondo al pasar el mouse */
+  }
