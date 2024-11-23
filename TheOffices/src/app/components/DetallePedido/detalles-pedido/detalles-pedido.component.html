@@ -1,0 +1,30 @@
+<div class="pedido-container" *ngIf="pedido">
+    <div class="pedido-info">
+      <div>
+        <p><strong>ID_Pedido:</strong> {{ pedido.ID_Pedido }}</p>
+        <p><strong>Clave:</strong> {{ pedido.Clave }}</p>
+      </div>
+      <div>
+        <p><strong>Total:</strong> {{ pedido.Total | currency }}</p>
+        <p><strong>Codigo:</strong> {{ pedido.Codigo }}</p>
+      </div>
+      <div>
+        <p><strong>Fecha:</strong> {{ pedido.Fecha  | date: 'dd/MM/yyyy' }}</p>
+      </div>
+    </div>
+  
+    <div class="productos-container">
+      <div class="producto" *ngFor="let detalle of detalles">
+        <div class="producto-info">
+          <p><strong>Nombre:</strong> {{ detalle.Nombre }}</p>
+          <p><strong>Descripción:</strong> {{ detalle.Descripcion }}</p>
+          <p><strong>Precio:</strong> {{ detalle.Subtotal | currency }}</p>
+          <p><strong>Cantidad:</strong> {{ detalle.Cantidad }}</p>
+        </div>
+        <div class="producto-img">
+            <img class="foto" src="https://static.vecteezy.com/system/resources/previews/016/473/802/non_2x/sheets-of-paper-png.png" alt="papel">
+        </div>
+      </div>
+    </div>
+  </div>
+  

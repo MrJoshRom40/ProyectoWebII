@@ -1,1 +1,22 @@
-<p>pedidos works!</p>
+<div class="container">
+    <div *ngFor="let pedido of pedidos" class="card">
+      <div class="card-grid">
+        <!-- Columna 1 -->
+        <div class="column">
+          <p><strong>ID_Pedido:</strong> {{ pedido.ID_Pedido }}</p>
+          <p>{{ pedido.Fecha  | date: 'dd/MM/yyyy' }}</p>
+        </div>
+        <!-- Columna 2 -->
+        <div class="column">
+          <p><strong>Total:</strong> ${{ pedido.Total }}</p>
+          <button class="details-button" (click)="verDetalles(pedido)">Detalles</button>
+        </div>
+        <!-- Columna 3 -->
+        <div class="column">
+          <p><strong>Clave:</strong> {{ pedido.Clave }}</p>
+          <p><strong>Codigo:</strong> {{ pedido.Codigo }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  

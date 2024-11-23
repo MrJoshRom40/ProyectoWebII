@@ -21,6 +21,8 @@ export class LoginComponent {
   user: User | null = null; // Para almacenar la respuesta del usuario
 
 
+
+
   constructor(private loginService: LoginService, private router: Router, private us: UserService) {}
 
   // Método que se ejecuta cuando el usuario envía el formulario

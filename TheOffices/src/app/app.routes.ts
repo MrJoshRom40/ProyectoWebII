@@ -10,5 +10,6 @@ export const routes: Routes = [
     {path: 'Contacto', loadComponent: () => import('./components/contacto/contacto.component').then((m) => m.ContactoComponent),},
     {path: 'Pedidos', loadComponent: () => import('./components/pedidos/pedidos.component').then((m) => m.PedidosComponent),},
     {path: 'Preguntas frecuentes', loadComponent: () => import('./components/preguntas/preguntas.component').then((m) => m.PreguntasComponent),},
-    {path: 'Avisos', loadComponent: () => import('./components/avisos-p-c/avisos-p-c.component').then((m) => m.AvisosPCComponent),}
+    {path: 'Avisos', loadComponent: () => import('./components/avisos-p-c/avisos-p-c.component').then((m) => m.AvisosPCComponent),},
+    {path: 'Detalles', loadComponent: () => import('./components/DetallePedido/detalles-pedido/detalles-pedido.component').then((m) => m.DetallesPedidoComponent),}
 ];

@@ -1,0 +1,76 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    display: flex; /* Flexbox para centrar */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    min-height: 100vh; /* Altura mínima igual al viewport */
+    align-content: center;
+    margin: 0; /* Sin márgenes */
+  }
+  
+  .pedido-container {
+    background: #fff;
+    border-radius: 15px;
+    padding: 40px; /* Más espacio interno */
+    width: 90%; /* Aumentar el ancho para pantallas más grandes */
+    max-width: 800px; /* Limitar el tamaño máximo */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra más destacada */
+    font-size: 18px; /* Fuente más grande para mejor visibilidad */
+    text-align: left; /* Asegurar texto alineado a la izquierda */
+  }
+  
+  
+  .pedido-info {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid #ccc; /* Línea más gruesa */
+    padding-bottom: 20px; /* Más espacio inferior */
+    margin-bottom: 20px;
+  }
+  
+  .pedido-info p {
+    margin: 5px 0;
+    font-size: 18px; /* Fuente más grande */
+  }
+  
+  .productos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Más espacio entre productos */
+  }
+  
+  .producto {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f7f7f7;
+    border-radius: 15px; /* Bordes más redondeados */
+    padding: 20px; /* Más espacio interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra más destacada */
+  }
+  
+  .producto-info {
+    max-width: 70%;
+  }
+  
+  .producto-info p {
+    margin: 10px 0; /* Más espacio entre las líneas */
+    font-size: 18px; /* Fuente más grande */
+  }
+  
+  .producto-img {
+    width: 100px; /* Imagen más grande */
+    height: 100px;
+    background: #eee;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .producto-img img {
+    max-width: 100%;
+    max-height: 100%;
+  }  
