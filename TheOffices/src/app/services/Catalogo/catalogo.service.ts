@@ -24,7 +24,13 @@ export class CatalogoService {
   }
 
   actualizarProducto(producto: Producto): Observable<void> {
+    console.log('Datos enviados al backend:', producto);
     return this.http.put<void>(`${this.apiUrl}/${producto.ID_Producto}`, producto);
   }
+  
+  agregarProducto(producto: any): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}`, producto);
+  }
+  
 }
 

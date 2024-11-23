@@ -11,17 +11,18 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './modificar-producto.component.html',
-  styleUrls: ['./modificar-producto.component.css'], // Arreglé el typo: styleUrl -> styleUrls
+  styleUrls: ['./modificar-producto.component.css'],
 })
 export class ModificarProductoComponent implements OnInit {
-  producto = {
+  producto: Producto = {
+    ID_Producto: 0, // Asegúrate de incluir este campo si lo necesitas para la actualización
     Nombre: '',
     Descripcion: '',
     Precio: 0,
-    Cantidad: 0
+    Cantidad: 0,
   };
-  productos: Producto | null = null; // Producto que se va a modificar
-  idProducto: string = ''; // ID del producto que se extraerá de la URL
+
+  idProducto: string = ''; // ID del producto extraído de la URL
 
   constructor(
     private route: ActivatedRoute,
@@ -39,7 +40,8 @@ export class ModificarProductoComponent implements OnInit {
     // Llamar al servicio para obtener los datos del producto
     this.catalogoService.obtenerProductoPorId(this.idProducto).subscribe(
       (data: Producto) => {
-        this.productos = data;
+        console.log('Datos del producto cargado:', data);
+        this.producto = data; // Asigna directamente el objeto obtenido al modelo
       },
       (error) => {
         console.error('Error al cargar el producto:', error);
@@ -50,19 +52,23 @@ export class ModificarProductoComponent implements OnInit {
   }
 
   guardarCambios(): void {
-    if (this.productos) {
-      this.catalogoService.actualizarProducto(this.productos).subscribe(
-        () => {
-          Swal.fire('Éxito', 'Producto modificado correctamente', 'success').then(() => {
-            this.router.navigate(['/Catálogo']); // Redirige al catálogo tras guardar
-          });
-        },
-        (error) => {
-          console.error('Error al actualizar el producto:', error);
-          Swal.fire('Error', 'No se pudo actualizar el producto', 'error');
-        }
-      );
-    }
+    // Asegurarse de que el ID del producto esté asignado
+    this.producto.ID_Producto = parseInt(this.idProducto, 10);
+
+    console.log('Datos del producto antes de enviar:', this.producto);
+
+    // Llamar al servicio para actualizar el producto
+    this.catalogoService.actualizarProducto(this.producto).subscribe(
+      () => {
+        Swal.fire('Éxito', 'Producto modificado correctamente', 'success').then(() => {
+          this.router.navigate(['/Catálogo']); // Redirige al catálogo tras guardar
+        });
+      },
+      (error) => {
+        console.error('Error al actualizar el producto:', error);
+        Swal.fire('Error', 'No se pudo actualizar el producto', 'error');
+      }
+    );
   }
 
   cancelar(): void {

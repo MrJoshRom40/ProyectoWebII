@@ -82,3 +82,26 @@ button{
     padding: 10px; /* Espaciado interno del producto */
 }
 
+.add-product {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .add-product button {
+    padding: 10px 20px;
+    background-color: #FAFDDE;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+  
+  .add-product button:hover {
+    background-color: #FAFDDE;
+    transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  

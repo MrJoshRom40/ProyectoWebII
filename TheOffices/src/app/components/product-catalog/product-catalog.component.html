@@ -1,6 +1,7 @@
-
-
 <section class="product-grid">
+    <div *ngIf="esAdmin" class="add-product">
+        <button (click)="agregarProducto()">Agregar Nuevo Producto</button>
+      </div>
     <div *ngFor="let producto of productos" class="product">
         <img class="foto" src="https://static.vecteezy.com/system/resources/previews/016/473/802/non_2x/sheets-of-paper-png.png" alt="papel">
         <h3>{{ producto.Nombre }}</h3>

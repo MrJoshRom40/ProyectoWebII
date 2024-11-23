@@ -11,5 +11,6 @@ export const routes: Routes = [
     {path: 'Pedidos', loadComponent: () => import('./components/pedidos/pedidos.component').then((m) => m.PedidosComponent),},
     {path: 'Preguntas frecuentes', loadComponent: () => import('./components/preguntas/preguntas.component').then((m) => m.PreguntasComponent),},
     {path: 'Avisos', loadComponent: () => import('./components/avisos-p-c/avisos-p-c.component').then((m) => m.AvisosPCComponent),},
-    {path: 'Producto/:id', loadComponent: ()=>import('./components/modificar-producto/modificar-producto.component').then((m) =>m.ModificarProductoComponent), }
+    {path: 'Producto/:id', loadComponent: ()=>import('./components/modificar-producto/modificar-producto.component').then((m) =>m.ModificarProductoComponent), },
+    {path: 'Agregar', loadComponent: ()=>import('./components/agregar-producto/agregar-producto.component').then((m)=>m.AgregarProductoComponent),}
 ];

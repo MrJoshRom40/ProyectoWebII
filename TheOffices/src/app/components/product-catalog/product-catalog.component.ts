@@ -51,6 +51,11 @@ export class ProductCatalogComponent implements OnInit {
     );
   }
 
+  agregarProducto(): void {
+    this.router.navigate(['Agregar']); // Redirige a la página de agregar producto
+  }
+  
+
   modificarProducto(producto: Producto): void {
     this.router.navigate(['Producto', producto.ID_Producto]);
   }

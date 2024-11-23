@@ -1,22 +1,25 @@
-<h2>Modificar Producto</h2>
-<form *ngIf="producto">
-    <div>
-      <label for="nombre">Nombre:</label>
-      <input id="nombre" [(ngModel)]="producto.Nombre" name="nombre" type="text" required>
+<div class="form-container">
+  <h2>Modificar Producto</h2>
+  <form>
+    <div class="form-columns">
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input id="nombre" type="text" [(ngModel)]="producto.Nombre" name="nombre" required />
+      </div>
+      <div class="form-group">
+        <label for="precio">Precio:</label>
+        <input id="precio" type="number" [(ngModel)]="producto.Precio" name="precio" required />
+      </div>
     </div>
-    <div>
+    <div class="form-group">
       <label for="descripcion">Descripción:</label>
       <textarea id="descripcion" [(ngModel)]="producto.Descripcion" name="descripcion"></textarea>
     </div>
-    <div>
-      <label for="precio">Precio:</label>
-      <input id="precio" [(ngModel)]="producto.Precio" name="precio" type="number" required>
-    </div>
-    <div>
+    <div class="form-group">
       <label for="cantidad">Cantidad:</label>
-      <input id="cantidad" [(ngModel)]="producto.Cantidad" name="cantidad" type="number" required>
+      <input id="cantidad" type="number" [(ngModel)]="producto.Cantidad" name="cantidad" required />
     </div>
     <button type="button" (click)="guardarCambios()">Guardar Cambios</button>
-    <button type="button" (click)="cancelar()">Cancelar</button>
+    <button type="button" class="cancel" (click)="cancelar()">Cancelar</button>
   </form>
-  
+</div>

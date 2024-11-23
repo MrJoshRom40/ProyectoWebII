@@ -25,7 +25,7 @@ app.use(express.json());
 const db = mysql.createConnection({
   host: 'localhost', // El servidor de tu base de datos
   user: 'root',      // Usuario de MySQL (por defecto en XAMPP es 'root')
-  password: '3li4lexR0m040',      // Contraseña de MySQL (por defecto en XAMPP está vacía)
+  password: '',      // Contraseña de MySQL (por defecto en XAMPP está vacía)
   database: 'theoffices', // Nombre de tu base de datos
 });
 
@@ -37,43 +37,6 @@ db.connect((err) => {
   }
   console.log('Conectado a la base de datos MariaDB');
 });
-
-// Ruta para obtener todos los productos
-app.get('/api/productos', (req, res) => {
-  const sql = 'SELECT producto.ID_Producto, producto.Nombre, producto.Descripcion, producto.Precio, inventario.Cantidad FROM producto, inventario WHERE producto.Inventario = inventario.ID_Inventario AND inventario.Cantidad > 0;';
-  db.query(sql, (err, results) => {
-    if (err) {
-      return res.status(500).send('Error en la consulta a la base de datos');
-    }
-    res.json(results);
-  });
-});
-
-app.get('/api/productos/:id', (req, res) => {
-  const { id } = req.params; // Extraer el ID de los parámetros de la ruta
-  const sql = `
-    SELECT producto.ID_Producto, producto.Nombre, producto.Descripcion, producto.Precio, inventario.Cantidad 
-    FROM producto
-    JOIN inventario ON producto.Inventario = inventario.ID_Inventario
-    WHERE producto.ID_Producto = ?;
-  `;
-  
-  db.query(sql, [id], (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Error al obtener el producto' });
-    }
-    
-    if (results.length === 0) {
-      // Si no se encuentra el producto, enviar un error 404
-      return res.status(404).json({ error: 'Producto no encontrado' });
-    }
-
-    // Enviar el primer resultado (el producto encontrado)
-    res.json(results[0]);
-  });
-});
-
 
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;  // Capturar los datos enviados por el cliente
@@ -98,6 +61,168 @@ app.post('/api/login', (req, res) => {
     }
   });
 });
+
+app.post('/api/productos', (req, res) => {
+  const { Nombre, Descripcion, Precio, Cantidad } = req.body;
+
+  if (!Nombre || !Descripcion || Precio == null || Cantidad == null) {
+    return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+  }
+
+  // Primero, insertar en la tabla inventario
+  const sqlInventario = 'INSERT INTO inventario (Cantidad) VALUES (?)';
+
+  db.query(sqlInventario, [Cantidad], (err, resultInventario) => {
+    if (err) {
+      console.error('Error al agregar al inventario:', err);
+      return res.status(500).json({ error: 'Error al agregar al inventario' });
+    }
+
+    const inventarioId = resultInventario.insertId; // ID del inventario generado
+
+    // Luego, insertar en la tabla producto usando el ID del inventario generado
+    const sqlProducto = `
+      INSERT INTO producto (Nombre, Descripcion, Precio, Inventario)
+      VALUES (?, ?, ?, ?);
+    `;
+
+    db.query(sqlProducto, [Nombre, Descripcion, Precio, inventarioId], (err, resultProducto) => {
+      if (err) {
+        console.error('Error al agregar el producto:', err);
+        return res.status(500).json({ error: 'Error al agregar el producto' });
+      }
+
+      res.json({ message: 'Producto agregado correctamente', productoId: resultProducto.insertId });
+    });
+  });
+});
+
+
+
+// Ruta para obtener todos los productos
+app.get('/api/productos', (req, res) => {
+  const sql = 'SELECT producto.ID_Producto, producto.Nombre, producto.Descripcion, producto.Precio, inventario.Cantidad FROM producto, inventario WHERE producto.Inventario = inventario.ID_Inventario AND inventario.Cantidad > 0;';
+  db.query(sql, (err, results) => {
+    if (err) {
+      return res.status(500).send('Error en la consulta a la base de datos');
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/productos/:id', (req, res) => {
+  const { id } = req.params; // Obtener el ID de los parámetros de la URL
+  
+  const sql = `
+    SELECT producto.ID_Producto, producto.Nombre, producto.Descripcion, producto.Precio, inventario.Cantidad
+    FROM producto
+    JOIN inventario ON producto.Inventario = inventario.ID_Inventario
+    WHERE producto.ID_Producto = ?;
+  `;
+
+  db.query(sql, [id], (err, results) => {
+    if (err) {
+      console.error('Error en la consulta SQL:', err);
+      return res.status(500).json({ error: 'Error al obtener el producto' });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: 'Producto no encontrado' });
+    }
+
+    res.json(results[0]); // Enviar el producto encontrado
+  });
+});
+
+app.put('/api/productos/:id', (req, res) => {
+  const { id } = req.params; // ID del producto recibido como parámetro
+  const { Nombre, Descripcion, Precio, Cantidad } = req.body; // Datos enviados desde el cliente
+
+  console.log('Datos recibidos en el backend:', { id, Nombre, Descripcion, Precio, Cantidad });
+
+  // Verificar si el producto existe antes de actualizar
+  const verificarProductoSql = `
+    SELECT producto.ID_Producto, producto.Nombre, producto.Descripcion, producto.Precio, inventario.Cantidad
+    FROM producto
+    JOIN inventario ON producto.Inventario = inventario.ID_Inventario
+    WHERE producto.ID_Producto = ?;
+  `;
+
+  db.query(verificarProductoSql, [id], (err, productoExistente) => {
+    if (err) {
+      console.error('Error al verificar el producto:', err);
+      return res.status(500).json({ error: 'Error al verificar el producto' });
+    }
+
+    if (productoExistente.length === 0) {
+      console.log('Producto no encontrado:', id);
+      return res.status(404).json({ error: 'Producto no encontrado' });
+    }
+
+    console.log('Producto antes de la actualización:', productoExistente[0]);
+
+    // Consulta SQL para actualizar el producto
+    const sqlProducto = `
+      UPDATE producto
+      SET Nombre = ?, Descripcion = ?, Precio = ?
+      WHERE ID_Producto = ?;
+    `;
+
+    db.query(sqlProducto, [Nombre, Descripcion, Precio, id], (err, resultProducto) => {
+      if (err) {
+        console.error('Error al actualizar producto:', err);
+        return res.status(500).json({ error: 'Error al actualizar producto' });
+      }
+
+      if (resultProducto.affectedRows === 0) {
+        console.log('No se afectaron filas al actualizar el producto:', id);
+        return res.status(500).json({ error: 'No se pudo actualizar el producto' });
+      }
+
+      console.log('Producto actualizado correctamente:', resultProducto);
+
+      // Actualizar inventario
+      const sqlInventario = `
+        UPDATE inventario
+        SET Cantidad = ?
+        WHERE ID_Inventario = (
+          SELECT Inventario FROM producto WHERE ID_Producto = ?
+        );
+      `;
+
+      db.query(sqlInventario, [Cantidad, id], (err, resultInventario) => {
+        if (err) {
+          console.error('Error al actualizar inventario:', err);
+          return res.status(500).json({ error: 'Error al actualizar inventario' });
+        }
+
+        if (resultInventario.affectedRows === 0) {
+          console.log('No se afectaron filas al actualizar el inventario:', id);
+          return res.status(500).json({ error: 'No se pudo actualizar el inventario' });
+        }
+
+        console.log('Inventario actualizado correctamente:', resultInventario);
+
+        // Verificar los cambios después de la actualización
+        db.query(verificarProductoSql, [id], (err, productoActualizado) => {
+          if (err) {
+            console.error('Error al verificar el producto actualizado:', err);
+            return res.status(500).json({ error: 'Error al verificar el producto actualizado' });
+          }
+
+          console.log('Producto después de la actualización:', productoActualizado[0]);
+
+          res.json({
+            message: 'Producto e inventario actualizados correctamente',
+            productoActualizado: productoActualizado[0],
+          });
+        });
+      });
+    });
+  });
+});
+
+
 
 
 
