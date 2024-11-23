@@ -6,9 +6,6 @@ import { PedidoService } from '../../services/Pedido/pedido.service';
 import { Pedido } from '../../interfaces/pedido.interface';
 import { DetallesService } from '../../services/DetallesCarrito/detalles.service';
 
-
-
-
 declare var paypal: any; // Declarar la variable paypal
 
 @Component({
@@ -23,7 +20,7 @@ export class PaypalButtonComponent implements AfterViewInit {
   @Input() productos: any[] = []; // Recibir la lista de productos como entrada
 
   constructor(private carritoC: CarritoComponent, private us: UserService, private ps: PedidoService, private ds: DetallesService){
-    
+    //dd
   }
   
 
