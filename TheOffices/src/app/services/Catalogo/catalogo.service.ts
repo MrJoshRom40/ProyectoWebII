@@ -18,5 +18,13 @@ export class CatalogoService {
   obtenerProductos(): Observable<Producto[]> {
     return this.http.get<Producto[]>(this.apiUrl);
   }
+
+  obtenerProductoPorId(id: string): Observable<Producto> {
+    return this.http.get<Producto>(`${this.apiUrl}/${id}`);
+  }
+
+  actualizarProducto(producto: Producto): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${producto.ID_Producto}`, producto);
+  }
 }
 

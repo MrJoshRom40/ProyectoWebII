@@ -38,6 +38,32 @@ app.get('/api/productos', (req, res) => {
   });
 });
 
+app.get('/api/productos/:id', (req, res) => {
+  const { id } = req.params; // Extraer el ID de los parámetros de la ruta
+  const sql = `
+    SELECT producto.ID_Producto, producto.Nombre, producto.Descripcion, producto.Precio, inventario.Cantidad 
+    FROM producto
+    JOIN inventario ON producto.Inventario = inventario.ID_Inventario
+    WHERE producto.ID_Producto = ?;
+  `;
+  
+  db.query(sql, [id], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Error al obtener el producto' });
+    }
+    
+    if (results.length === 0) {
+      // Si no se encuentra el producto, enviar un error 404
+      return res.status(404).json({ error: 'Producto no encontrado' });
+    }
+
+    // Enviar el primer resultado (el producto encontrado)
+    res.json(results[0]);
+  });
+});
+
+
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;  // Capturar los datos enviados por el cliente
 
