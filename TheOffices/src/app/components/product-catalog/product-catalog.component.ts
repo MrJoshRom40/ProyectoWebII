@@ -22,15 +22,15 @@ export class ProductCatalogComponent implements OnInit {
     private router: Router,
     private catalogoService: CatalogoService,
     private carritoService: CarritoService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.verificarRolUsuario(); 
+    this.verificarRolUsuario();
     this.cargarProductos();
   }
 
   verificarRolUsuario(): void {
-    const usuarioActual = localStorage.getItem('rol'); 
+    const usuarioActual = localStorage.getItem('rol');
     this.esAdmin = usuarioActual === '1'; // 1 = admin, 0 = usuario
   }
 
@@ -54,11 +54,36 @@ export class ProductCatalogComponent implements OnInit {
   agregarProducto(): void {
     this.router.navigate(['Agregar']); // Redirige a la página de agregar producto
   }
-  
+
 
   modificarProducto(producto: Producto): void {
     this.router.navigate(['Producto', producto.ID_Producto]);
   }
+
+  eliminarProducto(producto: Producto): void {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: `Se eliminará el producto: ${producto.Nombre}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.catalogoService.eliminarProducto(producto.ID_Producto).subscribe(
+          () => {
+            Swal.fire('Eliminado', 'El producto ha sido eliminado correctamente.', 'success');
+            this.cargarProductos(); // Recargar los productos después de eliminar
+          },
+          (error) => {
+            console.error('Error al eliminar el producto:', error);
+            Swal.fire('Error', 'No se pudo eliminar el producto.', 'error');
+          }
+        );
+      }
+    });
+  }
+
 
   addToCart(producto: Producto): void {
     this.carritoService.addToCart(producto);

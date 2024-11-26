@@ -13,6 +13,7 @@
         <hr>
         <button *ngIf="!esAdmin" (click)="addToCart(producto)">Añadir al Carrito</button>
         <button *ngIf="esAdmin" (click)="modificarProducto(producto)">Modificar Producto</button>
+        <button *ngIf="esAdmin" (click)="eliminarProducto(producto)">Eliminar Producto</button>
     
     </div>
 </section>

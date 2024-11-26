@@ -31,6 +31,11 @@ export class CatalogoService {
   agregarProducto(producto: any): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}`, producto);
   }
+
+  eliminarProducto(idProducto: number): Observable<void> {
+    return this.http.delete<void>(`http://localhost:3000/api/productos/${idProducto}`);
+  }
+  
   
 }
 

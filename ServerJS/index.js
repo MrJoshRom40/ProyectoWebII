@@ -201,17 +201,12 @@ app.put('/api/productos/:id', (req, res) => {
           return res.status(500).json({ error: 'No se pudo actualizar el inventario' });
         }
 
-        console.log('Inventario actualizado correctamente:', resultInventario);
-
         // Verificar los cambios después de la actualización
         db.query(verificarProductoSql, [id], (err, productoActualizado) => {
           if (err) {
             console.error('Error al verificar el producto actualizado:', err);
             return res.status(500).json({ error: 'Error al verificar el producto actualizado' });
           }
-
-          console.log('Producto después de la actualización:', productoActualizado[0]);
-
           res.json({
             message: 'Producto e inventario actualizados correctamente',
             productoActualizado: productoActualizado[0],
@@ -219,6 +214,25 @@ app.put('/api/productos/:id', (req, res) => {
         });
       });
     });
+  });
+});
+
+app.delete('/api/productos/:id', (req, res) => {
+  const { id } = req.params;
+
+  const sql = 'DELETE FROM producto WHERE ID_Producto = ?';
+
+  db.query(sql, [id], (err, result) => {
+    if (err) {
+      console.error('Error al eliminar el producto:', err);
+      return res.status(500).json({ error: 'Error al eliminar el producto' });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Producto no encontrado' });
+    }
+
+    res.json({ message: 'Producto eliminado correctamente' });
   });
 });
 
