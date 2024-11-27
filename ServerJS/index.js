@@ -25,7 +25,7 @@ app.use(express.json());
 const db = mysql.createConnection({
   host: 'localhost', // El servidor de tu base de datos
   user: 'root',      // Usuario de MySQL (por defecto en XAMPP es 'root')
-  password: '',      // Contraseña de MySQL (por defecto en XAMPP está vacía)
+  password: '3li4lexR0m040',      // Contraseña de MySQL (por defecto en XAMPP está vacía)
   database: 'theoffices', // Nombre de tu base de datos
 });
 
@@ -237,10 +237,6 @@ app.delete('/api/productos/:id', (req, res) => {
 });
 
 
-
-
-
-
 // Ruta para registrar un nuevo usuario
 app.post('/api/register', (req, res) => {
   const { username, password, correo, pregunta, respuesta, direccion } = req.body;
@@ -273,6 +269,42 @@ app.post('/api/addPedido', (req, res) => {
     res.status(201).send({ message: 'Pedido creado con éxito', pedidoId: result.insertId });
   });
 });
+
+app.post('/api/pedidos', (req, res) => {
+  const { user } = req.body; // Obtener el ID del usuario desde el cuerpo de la solicitud
+  if (!user) {
+    return res.status(400).json({ error: 'Por favor, ingrese usr' });
+  }
+  const sql = 'SELECT ID_Pedido, Total, Fecha, Codigo, Clave FROM pedido WHERE ID_Usuario = ?';
+  db.query(sql, [user], (err, results) => {
+    if (err) {
+      return res.status(500).send('Error en la consulta a la base de datos');
+    }
+    res.json(results); // Enviar los resultados al cliente
+  });
+});
+app.post('/api/detalles', (req, res) => {
+  console.log('Datos recibidos:', req.body); // Verifica el contenido de la solicitud
+  const { pedidoId } = req.body;
+  if (!pedidoId) {
+    return res.status(400).json({ error: 'Por favor, ingrese pedido' });
+  }
+  const sql = `
+    SELECT Producto.Nombre, Producto.Descripcion, DetallesPedido.Subtotal, DetallesPedido.Cantidad 
+    FROM DetallesPedido 
+    INNER JOIN Producto ON DetallesPedido.Producto = Producto.ID_Producto 
+    INNER JOIN Pedido ON DetallesPedido.Pedido = Pedido.ID_Pedido 
+    WHERE DetallesPedido.Pedido = ?`;
+  db.query(sql, [pedidoId], (err, results) => {
+    if (err) {
+      console.error('Error en la consulta:', err); // Depuración
+      return res.status(500).send('Error en la consulta a la base de datos');
+    }
+    console.log('Resultados:', results); // Verifica los resultados
+    res.json(results);
+  });
+});
+
 
 // Ruta para agregar detalles del pedido
 app.post('/api/addDetalles', (req, res) => {
