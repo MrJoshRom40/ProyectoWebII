@@ -70,9 +70,9 @@ app.post('/api/productos', (req, res) => {
   }
 
   // Primero, insertar en la tabla inventario
-  const sqlInventario = 'INSERT INTO inventario (Cantidad) VALUES (?)';
+  const sqlInventario = 'INSERT INTO inventario (Cantidad, Descripcion) VALUES (?, ?)';
 
-  db.query(sqlInventario, [Cantidad], (err, resultInventario) => {
+  db.query(sqlInventario, [Cantidad, Descripcion], (err, resultInventario) => {
     if (err) {
       console.error('Error al agregar al inventario:', err);
       return res.status(500).json({ error: 'Error al agregar al inventario' });
@@ -283,6 +283,19 @@ app.post('/api/pedidos', (req, res) => {
     res.json(results); // Enviar los resultados al cliente
   });
 });
+
+app.post('/api/pedidos2', (req, res) => {
+  const sql = 'SELECT ID_Pedido, Total, Fecha, Codigo, Clave FROM pedido';
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error('Error en la consulta a la base de datos:', err);
+      return res.status(500).send('Error en la consulta a la base de datos');
+    }
+    res.json(results); // Enviar los resultados al cliente
+  });
+});
+
+
 app.post('/api/detalles', (req, res) => {
   console.log('Datos recibidos:', req.body); // Verifica el contenido de la solicitud
   const { pedidoId } = req.body;

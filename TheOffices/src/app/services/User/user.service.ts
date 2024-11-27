@@ -36,4 +36,8 @@ export class UserService {
   getUserID(){
     return this.user?.ID_Usuario;
   }
+
+  getuserType(){
+    return this.user?.Tipo;
+  }
 }

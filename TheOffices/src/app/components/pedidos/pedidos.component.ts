@@ -21,8 +21,13 @@ export class PedidosComponent implements OnInit {
 
   ngOnInit(): void {
     const userId = this.us.getUserID(); // Obtener el ID del usuario
+    const userType = this.us.getuserType();
     if (userId !== undefined) {
-      this.cargarPedidos(userId);
+      if(userType === 1){
+        this.cargarPedidosTotales();
+      } else if(userType === 0){
+        this.cargarPedidos(userId);
+      }
     } else {
       console.error('Error: El ID de usuario no está definido.');
     }
@@ -30,6 +35,18 @@ export class PedidosComponent implements OnInit {
 
   cargarPedidos(userId: number): void {
     this.pedidosService.getPedidosRealizados(userId).subscribe(
+      (data: Pedidos[]) => {
+        this.pedidos = data; // Guardar los pedidos obtenidos
+        console.log('Pedidos cargados:', data);
+      },
+      (error) => {
+        console.error('Error al cargar pedidos:', error);
+      }
+    );
+  }
+
+  cargarPedidosTotales(): void{
+    this.pedidosService.getPedidosRealizadosTotales().subscribe(
       (data: Pedidos[]) => {
         this.pedidos = data; // Guardar los pedidos obtenidos
         console.log('Pedidos cargados:', data);

@@ -12,6 +12,7 @@ import { Producto } from '../../interfaces/product.interface';
 
 export class CatalogoService {
   private apiUrl = 'http://localhost:3000/api/productos'; // Cambia la URL según tu API
+  
 
   constructor(private http: HttpClient) {}
 
